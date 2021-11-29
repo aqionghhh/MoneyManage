@@ -13,10 +13,10 @@ const User = require("../../models/User")
 //$route  GET请求 请求路径：api/users/test
 //@desc  返回请求的json数据
 //@access  public(接口分公共的还是私有的，这里是公共的接口)
-// router.get('/test', (req, res) => {
-//   //返回一个json数据
-//   res.json({ msg: "登录成功" })
-// })
+router.get('/test', (req, res) => {
+  //返回一个json数据
+  res.json({ msg: "测试成功" })
+})
 
 //$route  POST请求 请求路径：api/users/register
 //@desc  返回请求的json数据
@@ -105,15 +105,15 @@ router.post("/login", (req, res) => {
 //@desc  return 当前用户信息
 //@access  Private(接口分公共的还是私有的，只有拥有这个私人令牌的时候才能得到用户信息)
 // router.get("/current","验证token",(req,res)=>{})
-router.get("/current", 
+router.get("/current",
   passport.authenticate("jwt", { session: false }), (req, res) => {
-  // res.json(req.user)//验证成功token后返回用户所有信息
-  res.json({
-    id: req.user.id,
-    name: req.user.name,
-    email: req.user.email,
-    identity: req.user.identity
-  })//验证成功token后返回用户指定的信息
-})
+    // res.json(req.user)//验证成功token后返回用户所有信息
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      identity: req.user.identity
+    })//验证成功token后返回用户指定的信息
+  })
 
 module.exports = router

@@ -34,5 +34,5 @@ app.use('/api/profiles', profiles)
 
 const port = process.env.PORT || 5000;//指定端口号
 app.listen(port, () => {
-  console.log(`服务器搭建完成${port}`);
+  console.log(`服务器搭建完成,端口号：${port}`);
 })

@@ -100,5 +100,57 @@ User.js
 该文件中有三个接口，分别是：创建信息、获取所有信息、获取单个信息、编辑信息、删除信息
 
 其中，获取单个信息需要前端发来id作为匹配依据
+
+删除信息接口用的是router.delete()
 ```
 
+##### 前端
+
+```
+vue create client
+```
+
+###### 前后端连载
+
+```
+npm install concurrently
+。。。
+```
+
+###### 页面文件配置
+
+```
+|----------public文件夹
+	|----------css文件夹
+        |----------reset.css（把各种边距设为0）
+	|----------index.html
+|----------src文件夹
+    |----------assets静态资源文件夹
+    |----------components组件文件夹
+    |----------pages路由组件文件夹
+        |----------Index.vue首页路由组件
+    |----------router路由配置文件夹（配置路由）
+        |----------index.js
+    |----------store vuex文件夹
+        |----------index.js
+    |----------App.vue
+    |----------main.js
+```
+
+```
+npm install element-ui
+在main.js中进行配置
+```
+
+```
+路由组件Index.vue
+路由组件Register.vue
+路由组件404.vue
+	    {
+        path: '*',//什么都没有访问到
+        name: "/404",
+        component: NotFound
+        },
+```
+
+# 第三天
