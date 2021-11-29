@@ -2,31 +2,33 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 //创建Schema
-const UserSchema = new Schema({
+const ProfileSchema = new Schema({
   //创建规则
-  name: {//名字
+  type: {
+    type: String,
+  },
+  describe: {//描述
+    type: String,
+  },
+  incode: {//收入
     type: String,
     required: true
   },
-  email: {//邮箱
+  expend: {//支出
     type: String,
     required: true
   },
-  password: {//密码
+  cash: {//现金
     type: String,
     required: true
   },
-  avatar: {//头像
-    type: String
+  remark: {//备注
+    type: String,
   },
   date: {//日期
     type: Date,
     default: Date.now
   },
-  identity: {//身份
-    type: String,
-    required: true
-  },
 })
 
-module.exports = User = mongoose.model('users', UserSchema)
+module.exports = Profile = mongoose.model('profiles', ProfileSchema)

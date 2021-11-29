@@ -4,8 +4,9 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 const app = express()//实例化app
 
-//引入users.js
+//引入users.js/profiles.js
 const users = require("./routes/api/users")
+const profiles = require("./routes/api/profiles")
 
 //使用body-parser中间件
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,13 +20,16 @@ mongoose.connect(db)
   .then(() => { console.log('数据库连接成功'); })
   .catch(() => { console.log(err); })
 
+
 //初始化passport
 app.use(passport.initialize());
 //配置passport的文件
 require('./config/passport')(passport);//后面的括号是传过去的passport
 
+
 //使用routes
 app.use('/api/users', users)
+app.use('/api/profiles', profiles)
 
 
 const port = process.env.PORT || 5000;//指定端口号
