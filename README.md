@@ -127,6 +127,7 @@ npm install concurrently
 |----------src文件夹
     |----------assets静态资源文件夹
     |----------components组件文件夹
+    	|----------HeadNav.vue头部导航组件
     |----------pages路由组件文件夹
         |----------Index.vue首页路由组件
     |----------router路由配置文件夹（配置路由）
@@ -198,5 +199,30 @@ npm install --save axios
 做完路由守卫后去完善请求拦截和响应拦截，因为在登录之后要将token作为请求头，在响应拦截的地方判断token是否过期
 	在请求拦截中判断token是否存在，如果存在设置统一的请求头
 	在响应拦截中获取错误状态码，如果状态码==401，则说明token已经失效，就要清除localstorage中的eleToken，并重新跳转到登录页面
+```
+
+###### 解析token并将其存储到vuex中
+
+```
+解析token	
+	npm install --save jwt-decode(在client路径下)
+	在Login.vue中使用
+		import jwt_decode from 'jwt-decode';
+		在submitForm方法中解析token
+存储到vuex
+	npm install --save vuex
+	在store/index.js里配置  state,mutations,getters,actions
+在Login.vue中,把token存储到vuex中
+	this.$store.dispatch()
+
+会有以刷新就丢失vuex数据的情况，所以把Login.vue中的methods复制到App.vue，重新进行配置：
+	判断localStorage.eleToken是否存在，存在的话就进行解码，存到vuex中
+```
+
+###### 设计顶部导航
+
+```
+components/HeadNav.vue
+引入到Index.vue
 ```
 

@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
 export default {
   name: "login",
   components: {},
@@ -91,11 +92,28 @@ export default {
             const { token } = res.data;
             //存储到loaclstorage
             localStorage.setItem("eleToken", token);
+
+            //解析token
+            const decoded = jwt_decode(token);
+            // console.log(decoded);
+            //把token存储到vuex中
+            this.$store.dispatch("setAuthenticated", !this.isEmpty(decoded)); //判断是否授权
+            this.$store.dispatch("setUser", decoded); //判断是否授权
+
+            //路由跳转
+            this.$router.push("/index");
           });
-          //路由跳转
-          this.$router.push("/index");
         }
       });
+    },
+    isEmpty(value) {
+      //判断接收的数据是否为空，为空就返回真
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === "object" && Object.keys(value).length === 0) ||
+        (typeof value === "string" && value.trim().length === 0)
+      );
     },
   },
 };
