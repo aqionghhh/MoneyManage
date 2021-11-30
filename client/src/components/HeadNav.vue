@@ -38,6 +38,31 @@ export default {
       return this.$store.getters.user; //获取用户信息
     },
   },
+  methods: {
+    //通过command属性，点击哪个选项都会接收到一个command值
+    setDialogInfo(cmdItem) {
+      // console.log(cmdItem);
+      switch (cmdItem) {
+        case "info":
+          this.showInfoList(); //调用showInfoList方法
+          break;
+        case "logout":
+          this.logout(); //调用logout方法
+          break;
+      }
+    },
+    showInfoList() {
+      this.$router.push("/infoshow");
+    },
+    logout() {
+      //清除token
+      localStorage.removeItem("eleToken");
+      //设置vuex store
+      this.$store.dispatch("clearCurrent");
+      //跳转到登录页面
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 

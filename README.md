@@ -120,23 +120,30 @@ npm install concurrently
 ###### 页面文件配置
 
 ```
-|----------public文件夹
-	|----------css文件夹
-        |----------reset.css（把各种边距设为0）
-	|----------index.html
-|----------src文件夹
-    |----------assets静态资源文件夹
-    |----------components组件文件夹
-    	|----------HeadNav.vue头部导航组件
-    |----------pages路由组件文件夹
-        |----------Index.vue首页路由组件
-    |----------router路由配置文件夹（配置路由）
-        |----------index.js
-    |----------store vuex文件夹
-        |----------index.js
-    |----------App.vue
-    |----------main.js
-    |----------http.js请求拦截和响应拦截文件
+|--------------public文件夹
+	|--------------css文件夹
+        |--------------reset.css（把各种边距设为0）
+	|--------------index.html
+|--------------src文件夹
+    |--------------assets静态资源文件夹
+    |--------------components组件文件夹
+    	|--------------HeadNav.vue头部导航组件
+    	|--------------Left.vue侧边栏组件
+    |--------------pages路由组件文件夹
+        |--------------Index.vue首页路由组件
+        |--------------404.vue404路由组件
+        |--------------Login.vue登录路由组件
+        |--------------Register.vue注册路由组件
+        |--------------Home.vue首页路由组件
+        |--------------FundList.vue资金数据展示路由组件
+        |--------------Infoshow.vue用户信息展示路由组件
+    |--------------router路由配置文件夹（配置路由）
+        |--------------index.js
+    |--------------store vuex文件夹
+        |--------------index.js
+    |--------------App.vue
+    |--------------main.js
+    |--------------http.js请求拦截和响应拦截文件
 ```
 
 ```
@@ -224,5 +231,43 @@ npm install --save axios
 ```
 components/HeadNav.vue
 引入到Index.vue
+
+下拉菜单
+	引入element-ui
+	看文档
+	写methods
+	配置两个actions
+	在HeadNav组件的methods中调用编写的两个actions方法
+```
+
+```
+设置首页和个人信息
+pages/Home.vue
+是Index.vue下的二级路由
+	所以不能在Index.vue中使用<Home/>，得用<router-view></router-view>
+
+个人信息组件
+pages/Infoshow.vue
+需要获取用户信息，并展示用户名和身份
+	  computed: {
+        user() {
+          return this.$store.getters.user;
+        },
+      },
+```
+
+```
+添加左侧导航栏
+components/Left.vue
+在pages/Index.vue中引入
+```
+
+###### 资金管理
+
+```
+创建组件
+pages/FundList.vue
+发送请求，拿到数据（对应后端接口/api/profiles中的数据）
+配置当前路由
 ```
 

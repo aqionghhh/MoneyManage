@@ -5,6 +5,9 @@ import Index from '../pages/Index';
 import Register from '../pages/Register';
 import NotFound from '../pages/404';
 import Login from '../pages/Login';
+import Home from '../pages/Home';
+import Infoshow from '../pages/Infoshow';
+import FundList from '../pages/FundList';
 
 Vue.use(Router)
 
@@ -18,7 +21,28 @@ const router = new Router({
     {
       path: '/index',
       name: "index",
-      component: Index
+      component: Index,
+      children: [
+        {
+          path: '',
+          component: Home
+        },
+        {
+          path: '/home',
+          name: 'home',
+          component: Home
+        },
+        {
+          path: '/infoshow',
+          name: 'infoshow',
+          component: Infoshow
+        },
+        {
+          path: '/fundlist',
+          name: 'fundlist',
+          component: FundList
+        }
+      ]
     },
     {
       path: '/register',

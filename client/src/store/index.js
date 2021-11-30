@@ -39,6 +39,10 @@ const actions = {
   },
   setUser: ({ commit }, user) => {
     commit(types.SET_USER, user);
+  },
+  clearCurrent:({commit})=>{//清除状态
+    commit(types.SET_AUTHENTICATED,false);//设为非授权状态
+    commit(types.SET_USER,null);//用户设置为空
   }
 }
 
