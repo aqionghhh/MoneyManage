@@ -10,7 +10,7 @@
 |----------routes路由文件夹(里面放要访问的接口地址)
 	|----------api文件夹
 		|----------users.js登录和注册接口
-		|----------profiles.js创建信息和获取所有信息和获取单个信息接口和编辑信								息接口和删除信息接口
+		|----------profiles.js创建信息和获取所有信息和获取单个信息接口和编辑信息接口和删除信息接口
 |----------models创建数据库模型
 	|----------User.js用户信息的数据库模型
 	|----------Profile.js数据信息的数据库模型
@@ -135,6 +135,7 @@ npm install concurrently
         |----------index.js
     |----------App.vue
     |----------main.js
+    |----------http.js请求拦截和响应拦截文件
 ```
 
 ```
@@ -154,3 +155,48 @@ npm install element-ui
 ```
 
 # 第三天
+
+```
+在Register.vue中使用element-ui
+	看文档
+	编写data
+		在data里可以编写表单的规则，实现ajax
+```
+
+###### http.js
+
+```
+负责请求拦截和响应拦截
+npm install --save axios
+在main.js中引入
+	import axios from './http';
+	Vue.prototype.$axios;
+看element-ui文档，写开始动画和结束动画
+写请求拦截和响应拦截
+```
+
+###### vue.config.js
+
+```
+解决跨域请求
+```
+
+```
+登录页面	
+	路由组件Login.vue
+	在methods里通过axios发请求
+		返回的res中有token
+		登录成功之后通过解构的方式拿到token，并存储到localstorage里，最后进行路由跳转
+```
+
+###### 路由守卫和token过期处理
+
+```
+在登录之前智能访问登录和注册页面，访问index页面会跳转到登录页面
+	路由守卫的功能在router/index.js里写
+	前置路由守卫：router.beforeEach((to,from,next)=>{})
+做完路由守卫后去完善请求拦截和响应拦截，因为在登录之后要将token作为请求头，在响应拦截的地方判断token是否过期
+	在请求拦截中判断token是否存在，如果存在设置统一的请求头
+	在响应拦截中获取错误状态码，如果状态码==401，则说明token已经失效，就要清除localstorage中的eleToken，并重新跳转到登录页面
+```
+
