@@ -127,6 +127,7 @@ npm install concurrently
 |--------------src文件夹
     |--------------assets静态资源文件夹
     |--------------components组件文件夹
+    	|--------------Dialog.vue添加按钮弹窗组件
     	|--------------HeadNav.vue头部导航组件
     	|--------------Left.vue侧边栏组件
     |--------------pages路由组件文件夹
@@ -269,5 +270,76 @@ components/Left.vue
 pages/FundList.vue
 发送请求，拿到数据（对应后端接口/api/profiles中的数据）
 配置当前路由
+使用element-ui
+```
+
+# 第四天
+
+###### 资金管理
+
+```
+给编辑和删除按钮添加点击事件和对应方法
+```
+
+###### 添加按钮
+
+```
+添加功能
+在资金管理组件里设置添加按钮 FundList.vue
+给按钮添加点击事件handleAdd
+点击按钮有弹框，用到element-ui Dialog组件
+
+弹框新建一个组件
+components/Dialog.vue
+	其中属性:visible.sync="dialog.show"中的dialog.show的值希望从FundList组件中传递过来，所以
+		在Dialog.vue组件中用props接收dialog
+		在FundeList.vue组件中引入Dialog.vue组件，并注册组件，然后使用：<Dialog/>
+		在data中定义dialog（因为要传dialog）
+		在点击事件handleAdd中把dialog.show改成true，即显示弹窗
+		给<Dialog/>动态绑定dialog，即<Dialog :dialog="dialog" />
+```
+
+###### 完成添加功能
+
+```
+使用element-ui
+配置data，使用数组和对象，方便在模板中遍历数据
+在data里写输入框的校验规则
+给提交按钮添加点击事件onSubmit，并将表单中的值传入方法中，在methods中写方法
+	在onSubmit中接收传递过来的form，并且做完验证之后把数据传递到接口去，如果添加成功就返回一条提示信息，并关闭弹窗
+关闭弹窗之后注册一个事件 this.$emit('udate');  事件注册之后让父级组件FundList.vue来执行
+	<Dialog :dialog="dialog" @update="getprofile/>
+	（getprofile是FundList组件里的方法，用于获取表格数据）
+```
+
+###### 编辑和删除功能
+
+```
+编辑和添加写在一个组件里，只是需要辨别点击的是编辑按钮还是添加按钮，如果是编辑按钮，就把数据放在表单中展示；如果是添加按钮，则表单内容为空。
+	把Dialog.vue组件中data的formData数据剪切到父级组件中，然后将formData里的数据再传入到Dialog.vue组件中	:formData="formData"
+	在Dialog.vue组件props接收formData
+	在FundList.vue组件的data中的dialog里新增两个属性title和option（Dialog.vue组件中已经接收了dialog）
+	在FundList.vue组件中编写修改方法handleEdit，修改dialog里属性的值，点击修改按钮之后可以弹窗；获取当前行的formData
+		this.formData = {
+            type: row.type,
+            describe: row.describe,
+            incode: row.incode,
+            expend: row.expend,
+            cash: row.cash,
+            remark: row.remark,
+            id: row._id,
+          };
+     修改handleAdd方法，操作与上一步相同
+     在Dialog.vue组件的onSubmit方法中判断点击的是添加按钮还是编辑按钮，利用dialog的option属性进行判断（修改操作需要传入formData的id）
+ 	 const url = this.url.option==="add"?"add":`edit/${this.formData.id}`
+
+
+删除功能，在FundList.vue组件里写方法
+	    handleDelete(index, row) {
+         this.$axios.delete(`/api/profiles/delete/${row._id}`).then((res) => {
+         this.message("删除成功！");
+         this.getProfile();
+         });
+         },
 ```
 
