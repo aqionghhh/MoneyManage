@@ -343,3 +343,39 @@ components/Dialog.vue
          },
 ```
 
+# 第五天
+
+###### 实现分页结构
+
+```
+用到element-ui的pagination分页组件
+在FundList.vue组件里编写
+	在data中添加paginations的一个对象
+	把paginations里的属性动态绑定到标签页里
+	修改getProfile(){}
+	给<el-pagination>添加方法handleCurrentChange(){}和handleSizeChange(){}和setPaginations(){}
+```
+
+###### 筛选功能
+
+```
+用到element-ui的DateTimePicker日期时间选择器组件
+在FundList.vue组件里编写
+在data添加search_data对象
+在模板标签中绑定属性
+修改getProfile(){}
+	this.filterTableData = res.data;
+写handleSearch(){}
+```
+
+###### 权限功能
+
+```
+普通员工不能使用添加、删除、修改功能
+在computed中获取到user（从vuex中获取）
+	    user(){
+          return this.$store.getters.user
+        }
+在模板中的按钮标签里写  v-if="user.identity=='manage'" ，即只有管理员才能显示三个操作按钮
+```
+
